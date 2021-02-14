@@ -7,4 +7,3 @@
 
 alias ls='ls --color=auto'
 export PATH=/home/callum/Scripts:/home/callum/.local/bin:$PATH
-neofetch
