@@ -3,5 +3,6 @@
 #
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
+export TERMINAL="alacritty"
 startx
 

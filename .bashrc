@@ -7,3 +7,4 @@
 
 alias ls='ls --color=auto'
 export PATH=/home/callum/Scripts:/home/callum/.local/bin:$PATH
+export PATH=/home/callum/Scripts/Modules:/home/callum/.local/bin:$PATH

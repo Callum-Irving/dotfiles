@@ -1,5 +1,5 @@
 alias ls="exa -al --color=always --group-directories-first"
-alias vifm="vifmrun"
+alias vifm="vifmrun ."
 
 function bind_bang
     switch (commandline -t)[-1]
