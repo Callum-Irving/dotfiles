@@ -1,3 +1,4 @@
+EasyEDA
 cef_user_data
 @joplin
 app-outlet
@@ -41,3 +42,13 @@ systemd/
 terminator/
 truffle/
 volumeicon/
+FreeCAD/
+GIMP/
+Insomnia/
+QtProject/
+SEGGER/
+TabNine/
+gtk-2.0/
+kicad/
+mimeapps.list
+xarchiver/

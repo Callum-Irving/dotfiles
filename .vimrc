@@ -4,7 +4,7 @@ Plug 'vimwiki/vimwiki'
 Plug 'jiangmiao/auto-pairs'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'Valloric/YouCompleteMe'
+" Plug 'Valloric/YouCompleteMe'
 call plug#end()
 
 " 24 bit colour support:
@@ -21,7 +21,7 @@ endif
 
 set nu
 colorscheme one
-set background=light
+set background=dark
 set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 set nocompatible
 filetype plugin on
