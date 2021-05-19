@@ -1,5 +1,5 @@
 alias ls="exa -al --color=always --group-directories-first"
-alias vifm="vifmrun ."
+alias grep="rg"
 
 function bind_bang
     switch (commandline -t)[-1]
@@ -26,6 +26,3 @@ function fish_user_key_bindings
 end
 
 set fish_greeting
-
-# neofetch
-starship init fish | source

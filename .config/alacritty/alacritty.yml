@@ -102,6 +102,20 @@ font:
     style: Italic
 
   size: 11.0
+#font:
+  #normal:
+    #family: Fira Mono for Powerline
+    #style: Regular
+
+  #bold:
+    #family: Fira Mono for Powerline
+    #style: Bold
+
+  #italic:
+    #family: Fira Mono for Powerline
+    #style: Italic
+
+  #size: 11.0
 
 #  offset:
 #    x: 0
