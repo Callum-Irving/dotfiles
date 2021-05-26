@@ -5,7 +5,10 @@ xrandr --listmonitors | grep 'HDMI1' &> /dev/null && xrandr --output HDMI1 --mod
 dunst &>/dev/null &
 picom &>/dev/null &
 lxsession &>/dev/null &
-feh --bg-scale /home/callum/Pictures/Wallpapers/Wall21.jpg &
+
+xwallpaper --stretch /home/callum/Pictures/Wallpapers/Wall21.jpg &
+monitor_detect.sh &
+
 xidlehook --not-when-fullscreen --not-when-audio --timer 240 "slock" "" --timer 60 "systemctl suspend" "" &
 dwmblocks &
 

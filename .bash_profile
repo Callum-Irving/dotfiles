@@ -3,9 +3,13 @@
 #
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
-export TERMINAL="kitty"
+export TERMINAL="alacritty"
 export BROWSER="brave"
-export EDITOR="vim"
+export VISUAL="nvim"
+export EDITOR="nvim"
+export OPENER="xdg-open"
+
+export GOPATH="/home/callum/go"
 
 # For Netbeans/MPLab software that uses Java
 export _JAVA_AWT_WM_NONREPARENTING=1
@@ -17,3 +21,4 @@ export PATH=/opt/GCBASIC:$PATH
 if [ "$(tty)" = "/dev/tty1" ]; then
     startx
 fi
+export GPG_TTY=$(tty)

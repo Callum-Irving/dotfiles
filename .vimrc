@@ -11,18 +11,23 @@ Plug 'vimwiki/vimwiki'
 
 " Appearance
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'morhetz/gruvbox'
 
 " Language stuff
 Plug 'neoclide/coc.nvim'
 Plug 'rust-lang/rust.vim'
 Plug 'cespare/vim-toml'
-Plug 'vim-syntastic/syntastic'
+"Plug 'vim-syntastic/syntastic'
+Plug 'dense-analysis/ale'
 
 " File navigating stuff
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'airblade/vim-rooter'
+
+" Git
+Plug 'tpope/vim-fugitive'
 
 call plug#end()
 
@@ -35,38 +40,70 @@ filetype plugin indent on
 syntax on
 
 " 24 bit colour support:
-let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+"let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
+"let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
 
 " Set gruvbox colorscheme
-autocmd vimenter * ++nested colorscheme gruvbox
-
-" Set current line highlighting only when in insert mode
-autocmd InsertEnter,InsertLeave * set cul!
-
+set termguicolors
+colorscheme gruvbox
 set background=dark
+
+let mapleader=" "
+
+" ==========
+"  SETTINGS
+" ==========
+
 set nu
-set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
 set splitright
 set splitbelow
 set incsearch
 set hlsearch
 set shell=/bin/fish
 set clipboard+=unnamedplus
+set scrolloff=8
+set foldnestmax=1
+set foldmethod=indent
+set foldlevel=1
+set lbr
 
-let mapleader=" "
+" Airline
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline_symbols.branch=''
+let g:airline_powerline_fonts=1
+
+" Fzf
+let $FZF_DEFAULT_OPTS='--tac --reverse'
+
+" Netrw
+let g:netrw_banner=0
+let g:netrw_liststyle=3
+
+" Rust
+let g:rustfmt_autosave=1
+
+" Ale
+let g:ale_disable_lsp = 1
+
+let g:ale_linters = {
+\   'rust': ['analyzer'],
+\}
 
 " ==========
 "  KEYBINDS
 " ==========
 
+nnoremap <leader><M-i> :CocCommand rust-analyzer.toggleInlayHints<CR>
 nnoremap <Tab> @q
 nnoremap <Bslash> :noh<CR>
 nnoremap <bs> <C-o>
 " Open explorer
-nnoremap <M-f> :Explore<CR>
+nnoremap <M-f> :Files<CR>
 " Open term in new tab
-nnoremap <M-t> :tabnew<CR>:term<CR>
+nnoremap <leader>tt :tabnew<CR>:term<CR>
 " Create new empty splits
 nnoremap <leader>N :new<CR>
 nnoremap <leader>M :vnew<CR>
@@ -89,26 +126,29 @@ nmap <silent> <leader>gd <Plug>(coc-definition)
 nmap <silent> <leader>gy <Plug>(coc-type-definition)
 nmap <silent> <leader>gi <Plug>(coc-implementation)
 nmap <silent> <leader>gr <Plug>(coc-references)
+" Show documentation for function using coc.nvim
+nnoremap <silent> <leader>gk :call <SID>show_documentation()<CR>
 " Split navigation using leader key
 nnoremap <leader>h <C-W>h
 nnoremap <leader>j <C-W>j
 nnoremap <leader>k <C-W>k
 nnoremap <leader>l <C-W>l
+nnoremap <leader>H <C-W>H
+nnoremap <leader>J <C-W>J
+nnoremap <leader>K <C-W>K
+nnoremap <leader>L <C-W>L
 nnoremap <C-p> :GFiles<CR>
 nnoremap <C-f> :Rg<CR>
-" Show documentation for function using coc.nvim
-nnoremap <silent> <leader>gk :call <SID>show_documentation()<CR>
 nnoremap <C-b> :make<CR>
 " Scrolling
 noremap <C-j> <C-e>
 noremap <C-k> <C-y>
 inoremap <C-j> <C-o><C-e>
 inoremap <C-k> <C-o><C-y>
-" Don't copt when pressing 'x' in normal mode
+" Don't copy when pressing 'x' in normal mode
 nnoremap x "_x
+nnoremap <silent> <M-t> :Rg TODO<CR><M-a><CR>
 
-" Close fzf using Esc
-autocmd! FileType fzf tnoremap <buffer> <Esc> <C-c>
 
 " Show documentation for a function using CoC
 function! s:show_documentation()
@@ -121,32 +161,23 @@ function! s:show_documentation()
   endif
 endfunction
 
-" ===============
-"  MISCELLANEOUS
-" ===============
+" ===========
+"  AUTOGROUP
+" ===========
+augroup AUTOGROUP
+    " Clear all autocommands
+   autocmd!
 
-" Netrw
-let g:netrw_banner=0
-let g:netrw_liststyle=3
-augroup netrw_settings
-    " Close netrw using <bs>
-    autocmd FileType netrw nnoremap <buffer><silent> <bs> :call <SID>CloseNetrw()<CR>
-    function! s:CloseNetrw() abort
-      for bufn in range(1, bufnr('$'))
-        if bufexists(bufn) && getbufvar(bufn, '&filetype') ==# 'netrw'
-          silent! execute 'bwipeout ' . bufn
-          if getline(2) =~# '^" Netrw '
-            silent! bwipeout
-          endif
-          return
-        endif
-      endfor
-    endfunction
+    " Close fzf using Esc
+    autocmd! FileType fzf tnoremap <buffer> <Esc> <C-c>
+
+    " Rust settings
+    autocmd Filetype rust setlocal colorcolumn=100 makeprg=cargo\ build
+
+    " Set current line highlighting only when in insert mode
+    autocmd InsertEnter,InsertLeave * set cul!
 augroup END
 
-" Rust
-let g:rustfmt_autosave = 1
-autocmd Filetype rust setlocal colorcolumn=100 makeprg=cargo\ build
 
 " =================
 "  NEOVIM SPECIFIC

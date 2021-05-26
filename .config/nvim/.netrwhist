@@ -1,5 +1,6 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =6
+let g:netrw_dirhistcnt =7
+let g:netrw_dirhist_7='/home/callum/Applications'
 let g:netrw_dirhist_6='/home/callum/Projects/quickfetch/src/submodules'
 let g:netrw_dirhist_5='/home/callum/Projects/quickfetch/src'
 let g:netrw_dirhist_4='/home/callum/Projects/quickfetch'
@@ -9,4 +10,3 @@ let g:netrw_dirhist_1='/home/callum/Projects/quickfetch'
 let g:netrw_dirhist_0='/home/callum'
 let g:netrw_dirhist_9='/home/callum/Projects/quickfetch/src/submodules'
 let g:netrw_dirhist_8='/home/callum/Projects/quickfetch/src'
-let g:netrw_dirhist_7='/home/callum/Projects/quickfetch'

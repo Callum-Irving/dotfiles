@@ -1,5 +1,6 @@
 alias ls="exa -al --color=always --group-directories-first"
 alias grep="rg"
+alias monwallet="monero-wallet-cli --daemon-address node.moneroworld.com:18089 --wallet-file Monero/wallets/callums-wallet/callums-wallet"
 
 function bind_bang
     switch (commandline -t)[-1]
@@ -26,3 +27,5 @@ function fish_user_key_bindings
 end
 
 set fish_greeting
+
+pfetch
