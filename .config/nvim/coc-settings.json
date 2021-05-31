@@ -1,15 +1,10 @@
 {
-    "rust-analyzer.diagnostics.disabled": [
-        "unresolved-macro-call"
-    ],
-    "python.linting.pylintEnabled": true,
-    "python.pythonPath": "~/Scripts/coc-pyright-path",
-    "python.venvPath": "~/.virtualenvs",
-    "python.formatting.provider": "autopep8",
-    "diagnostics.displayByAle": true,
-    "coc.preferences.formatOnSaveFiletypes": [
-        "python",
-        "rust",
-        "json"
-    ]
+  "python.linting.pylintEnabled": true,
+  "python.venvPath": "$HOME/.virtualenvs",
+  "coc.preferences.formatOnSaveFiletypes": [
+    "python",
+    "json",
+    "javascript",
+    "typescript"
+  ]
 }

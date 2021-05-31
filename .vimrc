@@ -15,19 +15,18 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'morhetz/gruvbox'
 
 " Language stuff
-Plug 'neoclide/coc.nvim'
-Plug 'rust-lang/rust.vim'
-Plug 'cespare/vim-toml'
+"Plug 'neoclide/coc.nvim'
+"Plug 'rust-lang/rust.vim'
+"Plug 'cespare/vim-toml'
 "Plug 'vim-syntastic/syntastic'
-Plug 'dense-analysis/ale'
+"Plug 'dense-analysis/ale'
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/nvim-compe'
 
 " File navigating stuff
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'airblade/vim-rooter'
-
-" Git
-Plug 'tpope/vim-fugitive'
 
 call plug#end()
 
