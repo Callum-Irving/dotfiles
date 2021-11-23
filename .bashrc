@@ -15,3 +15,6 @@ fi
 
 
 . "$HOME/.cargo/env"
+
+bind '"\C-f":"project-opener\n"'
+
