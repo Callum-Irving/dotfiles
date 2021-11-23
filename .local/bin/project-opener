@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+
+# Largely taken from: https://github.com/ThePrimeagen/.dotfiles/blob/master/bin/.local/bin/tmux-sessionizer
+
+selected=$(fd --type directory . ~/Projects -d 1 | fzf)
+test -f "${selected}/.venv/bin/activate"
+python_project=$?
+
+tmux_running=$(pgrep tmux)
+
+if [ -z "$selected" ]; then
+    exit 0
+fi
+
+# TODO: Check tmux session info before creating one
+
+create_new_session() {
+    tmux new-session -s $selected_name -c $selected -d
+    tmux rename-window code
+    echo $python_project
+    if [ $python_project -eq 0 ]; then
+        tmux send-keys "source .venv/bin/activate" C-m
+    fi
+    tmux send-keys "nvim" C-m
+
+    tmux new-window -n terminals -c $selected
+    if [ $python_project -eq 0 ]; then
+        tmux send-keys "source .venv/bin/activate" C-m
+    fi
+
+    tmux split-window -h -c $selected
+    if [ $python_project -eq 0 ]; then
+        tmux send-keys "source .venv/bin/activate" C-m
+    fi
+
+    tmux select-pane -t 0
+    tmux select-window -t 0
+}
+
+selected_name=$(basename "$selected" | tr . _)
+tmux_running=$(pgrep tmux)
+
+# If tmux isn't running
+if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+    create_new_session
+    tmux attach-session -d -t $selected_name
+    exit 0
+fi
+
+
+# If session doesn't already exist
+if ! tmux has-session -t $selected_name 2> /dev/null; then
+    create_new_session
+fi
+
+# Finally, attach the session
+if [[ -z $TMUX ]]; then
+    tmux attach-session -t $selected_name
+else
+    tmux switch-client -t $selected_name
+fi
+
