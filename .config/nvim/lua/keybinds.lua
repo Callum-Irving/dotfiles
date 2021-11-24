@@ -27,3 +27,4 @@ map('n', '<leader>M', ':lefta vnew<CR>', default_opts)
 -- Exit terminal with escape key
 map('t', '<Esc>', [[<C-\><C-n>]], default_opts)
 
+map('n', '<leader>gc', ':Gdiffsplit<CR>', default_opts)

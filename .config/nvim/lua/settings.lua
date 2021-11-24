@@ -19,6 +19,14 @@ vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.opt.incsearch = true
 vim.opt.hlsearch = true
 
+vim.opt.mouse = 'a'
+
+vim.cmd [[
+set expandtab
+set shiftwidth=4
+set tabstop=4
+]]
+
 -- Set colorscheme and italic comments
 vim.g.vscode_style = 'dark'
 vim.cmd[[colorscheme vscode]]
@@ -45,12 +53,22 @@ au.group('CallumsGroup', {
       vim.wo.cul = false
     end
   },
+  -- No terminal line numbers
+  -- Also go right into insert mode
   {
     'TermOpen',
     '*',
     function()
       vim.wo.number = false
       vim.cmd('startinsert')
+    end
+  },
+  -- Format on save
+  {
+    'BufWritePre',
+    '<buffer>',
+    function()
+      vim.lsp.buf.formatting_sync()
     end
   }
 })
