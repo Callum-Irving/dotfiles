@@ -41,7 +41,6 @@ return require('packer').startup(function(use)
   -- Other
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'nvim-treesitter/playground'
-  use 'airblade/vim-rooter'
 
   -- File navigation
   use {'junegunn/fzf', run = function() vim.fn['fzf#install']() end}
