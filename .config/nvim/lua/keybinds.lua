@@ -28,3 +28,11 @@ map('n', '<leader>M', ':lefta vnew<CR>', default_opts)
 map('t', '<Esc>', [[<C-\><C-n>]], default_opts)
 
 map('n', '<leader>gc', ':Gdiffsplit<CR>', default_opts)
+
+-- Luasnip navigation
+vim.cmd [[
+  inoremap <silent> <c-k> <cmd>lua require('luasnip').jump(-1)<CR>
+  inoremap <silent> <c-j> <cmd>lua require('luasnip').jump(1)<CR>
+  snoremap <silent> <c-k> <cmd>lua require('luasnip').jump(-1)<CR>
+  snoremap <silent> <c-j> <cmd>lua require('luasnip').jump(1)<CR>
+]]
