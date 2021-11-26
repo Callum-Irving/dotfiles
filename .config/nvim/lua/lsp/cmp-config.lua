@@ -1,14 +1,17 @@
 local cmp = require('cmp')
-local luasnip = require('luasnip')
 local lspkind = require('lspkind')
 
 cmp.setup {
+  snippet = {
+    expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body)
+    end,
+  },
   -- completion settings
   completion = {
     completeopt = 'menu,menuone,noselect',
     keyword_length = 2
   },
-
   -- key mapping
   mapping = {
     ['<C-n>'] = cmp.mapping.select_next_item(),
@@ -21,13 +24,10 @@ cmp.setup {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
-
     -- Tab mapping
     ['<Tab>'] = function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
       else
         fallback()
       end
@@ -35,36 +35,26 @@ cmp.setup {
     ['<S-Tab>'] = function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
       else
         fallback()
       end
     end
   },
-
-  snippet = {
-    expand = function(args)
-      require('luasnip').lsp_expand(args.body)
-    end,
-  },
-
   -- load sources, see: https://github.com/topics/nvim-cmp
   sources = {
     { name = 'nvim_lua' },
     { name = 'nvim_lsp' },
-    { name = 'luasnip' },
+    { name = 'vsnip' },
     { name = 'path' },
     { name = 'buffer' }
   },
-
   formatting = {
     format = lspkind.cmp_format({
       with_text = true,
       menu = ({
-        buffer = "[Buffer]",
+        buffer = "[BUF]",
         nvim_lsp = "[LSP]",
-        luasnip = "[LuaSnip]",
+        vsnip = "[SNIP]",
         nvim_lua = "[Lua]"
       })
     })

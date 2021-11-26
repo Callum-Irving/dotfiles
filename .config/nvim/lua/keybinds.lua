@@ -29,10 +29,11 @@ map('t', '<Esc>', [[<C-\><C-n>]], default_opts)
 
 map('n', '<leader>gc', ':Gdiffsplit<CR>', default_opts)
 
--- Luasnip navigation
+-- vsnip navigation
 vim.cmd [[
-  inoremap <silent> <c-k> <cmd>lua require('luasnip').jump(-1)<CR>
-  inoremap <silent> <c-j> <cmd>lua require('luasnip').jump(1)<CR>
-  snoremap <silent> <c-k> <cmd>lua require('luasnip').jump(-1)<CR>
-  snoremap <silent> <c-j> <cmd>lua require('luasnip').jump(1)<CR>
+  imap <expr> <C-j> vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<C-j>'
+  smap <expr> <C-j> vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<C-j>'
+  imap <expr> <C-k> vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<C-k>'
+  smap <expr> <C-k> vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<C-k>'
 ]]
+

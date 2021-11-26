@@ -1,0 +1,13 @@
+{
+  "vimwiki metadata": {
+    "prefix": "meta",
+    "body": [
+      "---",
+      "title: '$1'",
+      "return-url: '${2:index.html}'",
+      "return-text: '${3:← Return home}'",
+      "---"
+    ]
+  }
+}
+

@@ -1,7 +1,7 @@
 require('plugins')
 require('settings')
 require('keybinds')
-require('luasnips-config')
+require('vsnip-config')
 require('blankline-config')
 require('colorizer-config')
 require('lualine-config')
