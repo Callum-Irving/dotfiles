@@ -26,6 +26,7 @@ set expandtab
 set shiftwidth=4
 set tabstop=4
 ]]
+vim.opt.smartindent = true
 
 -- Set colorscheme and italic comments
 vim.g.vscode_style = 'dark'

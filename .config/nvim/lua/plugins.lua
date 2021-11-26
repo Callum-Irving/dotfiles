@@ -29,6 +29,7 @@ return require('packer').startup(function(use)
     }
   }
   use 'L3MON4D3/LuaSnip'
+  use 'saadparwaiz1/cmp_luasnip'
   use 'onsails/lspkind-nvim'
   use 'ray-x/lsp_signature.nvim'
   use {
@@ -60,6 +61,7 @@ return require('packer').startup(function(use)
   }
 
   use 'tpope/vim-fugitive'
+  use 'vimwiki/vimwiki'
 
   -- Automatically sync if installed for first time
   if PackerBootstrap then
@@ -70,5 +72,5 @@ end)
 -- Possibly useful future plugins:
 -- 'alvan/vim-closetag'
 -- 'preservim/nerdcommenter'
--- 'vimwiki/vimwiki'
 -- 'akinsho/toggleterm.nvim'
+

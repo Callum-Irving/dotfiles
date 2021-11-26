@@ -50,12 +50,13 @@ cmp.setup {
   },
 
   -- load sources, see: https://github.com/topics/nvim-cmp
-  sources = cmp.config.sources({
+  sources = {
     { name = 'nvim_lua' },
     { name = 'nvim_lsp' },
+    { name = 'luasnip' },
     { name = 'path' },
     { name = 'buffer' }
-  }),
+  },
 
   formatting = {
     format = lspkind.cmp_format({
@@ -64,8 +65,7 @@ cmp.setup {
         buffer = "[Buffer]",
         nvim_lsp = "[LSP]",
         luasnip = "[LuaSnip]",
-        nvim_lua = "[Lua]",
-        latex_symbols = "[Latex]",
+        nvim_lua = "[Lua]"
       })
     })
   }

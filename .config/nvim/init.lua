@@ -1,10 +1,13 @@
 require('plugins')
 require('settings')
 require('keybinds')
+require('luasnips-config')
 require('blankline-config')
 require('colorizer-config')
 require('lualine-config')
 require('treesitter-config')
 require('nvim-tree-config')
 require('todo-config')
+require('vimwiki-config')
 require('lsp')
+
