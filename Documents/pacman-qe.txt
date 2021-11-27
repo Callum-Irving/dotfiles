@@ -12,6 +12,8 @@ bison 3.8.2-1
 brave-bin 1:1.31.87-1
 breeze-icons 5.88.0-1
 broadcom-wl-dkms 6.30.223.271-28
+ccls 0.20210330-4
+checkbashisms 2.21.4-1
 dash 0.5.11.4-1
 dhcpcd 9.4.0-1
 dialog 1:1.3_20211107-1
@@ -31,6 +33,7 @@ gparted 1.3.1-1
 gpicview 0.2.5-6
 groff 1.22.4-6
 grub 2:2.06-2
+gvfs 1.48.1-1
 htop 3.1.1-1
 inkscape 1.1.1-3
 jdk11-openjdk 11.0.13.u8-1
@@ -60,6 +63,7 @@ noto-fonts 20201226-2
 npm 8.1.3-1
 ntp 4.2.8.p15-1
 pacman-contrib 1.4.0-4
+pandoc-bin 2.16.2-1
 patch 2.7.6-8
 pavucontrol 1:5.0-1
 pcmanfm 1.3.2-1
@@ -74,6 +78,7 @@ qalculate-gtk 3.21.0-1
 reflector 2021.7.8-1
 ripgrep 13.0.0-2
 rust-analyzer 20211122-1
+shellcheck 0.7.2-110
 shutter 0.99.2-1
 spicetify-cli 2.7.2-1
 spotify 1:1.1.68.632-1
@@ -83,6 +88,7 @@ texinfo 6.8-2
 timeshift 21.09.1-3
 tk 8.6.12-1
 tmux 3.2_a-1
+trash-cli 0.21.10.24-1
 ttf-cascadia-code 2110.31-1
 ttf-font-awesome 5.15.4-1
 ttf-joypixels 6.6.0-1
