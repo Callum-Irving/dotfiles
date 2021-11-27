@@ -1,1 +1,1 @@
-xmonad
+exec xmonad

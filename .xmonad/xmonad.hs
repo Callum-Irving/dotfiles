@@ -51,7 +51,6 @@ myLayout = avoidStruts $ spacing 4 ( tiled ||| Mirror tiled ||| Full ) ||| Full
 myStartupHook = do
     spawnOnce "lxsession &"
     spawnOnce "picom &"
-    spawnOnce "dunst &"
     spawnOnce "xidlehook --not-when-fullscreen --not-when-audio --timer 240 'slock' '' --timer 60 'systemctl suspend' '' &"
     spawnOnce "feh --bg-fill ~/Pictures/landscape_mountains_art.jpg"
 
@@ -77,7 +76,8 @@ main = do
             ((0, xF86XK_AudioMute          ), spawn "amixer set Master toggle"),
             ((mod4Mask .|. shiftMask, xK_b ), spawn "brave"),
             ((mod4Mask, xK_s               ), spawn "systemctl suspend"),
-            ((mod4Mask .|. shiftMask, xK_s ), spawn "systemctl poweroff")
+            ((mod4Mask .|. shiftMask, xK_s ), spawn "systemctl poweroff"),
+            ((0, xK_Print                  ), spawn "shutter")
         ]
 
 
