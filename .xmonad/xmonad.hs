@@ -29,48 +29,55 @@ import System.IO
 import System.Exit
 import qualified Data.Map        as M
 
+myManageHook = composeAll
+    [ className =? "Shutter" --> doFloat
+    , manageDocks
+    ]
+
 myLayout = avoidStruts $ spacing 4 ( tiled ||| Mirror tiled ||| Full ) ||| Full
-	where
-		-- default tiling algorithm partitions the screen into two panes
-		tiled   = Tall nmaster delta ratio
-		
-		-- The default number of windows in the master pane
-		nmaster = 1
-		
-		-- Default proportion of screen occupied by master pane
-		ratio   = 1/2
-		
-		-- Percent of screen to increment by when resizing panes
-		delta   = 3/100
+    where
+        -- default tiling algorithm partitions the screen into two panes
+        tiled   = Tall nmaster delta ratio
+        
+        -- The default number of windows in the master pane
+        nmaster = 1
+        
+        -- Default proportion of screen occupied by master pane
+        ratio   = 1/2
+        
+        -- Percent of screen to increment by when resizing panes
+        delta   = 3/100
 
 myStartupHook = do
-	spawnOnce "lxsession &"
-	spawnOnce "picom &"
-	spawnOnce "xidlehook --not-when-fullscreen --not-when-audio --timer 240 'slock' '' --timer 60 'systemctl suspend' '' &"
-	spawnOnce "feh --bg-fill ~/Pictures/landscape_mountains_art.jpg"
+    spawnOnce "lxsession &"
+    spawnOnce "picom &"
+    spawnOnce "dunst &"
+    spawnOnce "xidlehook --not-when-fullscreen --not-when-audio --timer 240 'slock' '' --timer 60 'systemctl suspend' '' &"
+    spawnOnce "feh --bg-fill ~/Pictures/landscape_mountains_art.jpg"
 
 main = do
-	xmproc <- spawnPipe "xmobar"
-	xmonad $ ewmh $ docks defaultConfig
-		{ modMask = mod4Mask, -- Use Super instead of Alt
-		  terminal = "kitty",
-		  borderWidth = 0,
-		  focusFollowsMouse = False,
-		  layoutHook = myLayout,
-		  startupHook = myStartupHook,
-		  handleEventHook = handleEventHook def <+> fullscreenEventHook,
-		  logHook = dynamicLogWithPP xmobarPP
-                  	{ ppOutput = hPutStrLn xmproc,
-        		  ppTitle = xmobarColor "green" "" . shorten 50
-                	}
-		} `additionalKeys`
-		[
-			((0, xF86XK_AudioLowerVolume   ), spawn "amixer set Master 5%- unmute"),
-			((0, xF86XK_AudioRaiseVolume   ), spawn "amixer set Master 5%+ unmute"),
-			((0, xF86XK_AudioMute          ), spawn "amixer set Master toggle"),
-			((mod4Mask .|. shiftMask, xK_b ), spawn "brave"),
-			((mod4Mask, xK_s               ), spawn "systemctl suspend"),
-			((mod4Mask .|. shiftMask, xK_s ), spawn "systemctl shutdown")
-        	]
+    xmproc <- spawnPipe "xmobar"
+    xmonad $ ewmh $ docks defaultConfig
+        { modMask = mod4Mask, -- Use Super instead of Alt
+          terminal = "kitty",
+          borderWidth = 0,
+          focusFollowsMouse = False,
+          manageHook = myManageHook,
+          layoutHook = myLayout,
+          startupHook = myStartupHook,
+          handleEventHook = handleEventHook def <+> fullscreenEventHook,
+          logHook = dynamicLogWithPP xmobarPP
+                      { ppOutput = hPutStrLn xmproc,
+                  ppTitle = xmobarColor "green" "" . shorten 50
+                    }
+        } `additionalKeys`
+        [
+            ((0, xF86XK_AudioLowerVolume   ), spawn "amixer set Master 5%- unmute"),
+            ((0, xF86XK_AudioRaiseVolume   ), spawn "amixer set Master 5%+ unmute"),
+            ((0, xF86XK_AudioMute          ), spawn "amixer set Master toggle"),
+            ((mod4Mask .|. shiftMask, xK_b ), spawn "brave"),
+            ((mod4Mask, xK_s               ), spawn "systemctl suspend"),
+            ((mod4Mask .|. shiftMask, xK_s ), spawn "systemctl poweroff")
+        ]
 
 
