@@ -22,7 +22,7 @@ cmp.setup {
     ['<C-e>'] = cmp.mapping.close(),
     ['<CR>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
+      select = false, -- false makes it so that you must explicilty select an item
     },
     -- Tab mapping
     ['<Tab>'] = function(fallback)

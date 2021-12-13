@@ -37,3 +37,6 @@ vim.cmd [[
   smap <expr> <C-k> vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<C-k>'
 ]]
 
+-- Format
+map('n', '<leader>F', ':Neoformat<CR>', default_opts)
+

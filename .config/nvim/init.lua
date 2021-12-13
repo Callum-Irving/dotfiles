@@ -2,7 +2,7 @@ require('plugins')
 require('settings')
 require('keybinds')
 require('vsnip-config')
-require('blankline-config')
+-- require('blankline-config') -- no longer using but might go back
 require('colorizer-config')
 require('lualine-config')
 require('treesitter-config')

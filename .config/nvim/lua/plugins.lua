@@ -14,7 +14,7 @@ return require('packer').startup(function(use)
   use 'Mofiqul/vscode.nvim'
   use 'nvim-lualine/lualine.nvim'
   use 'kyazdani42/nvim-web-devicons'
-  use 'lukas-reineke/indent-blankline.nvim'
+  -- use 'lukas-reineke/indent-blankline.nvim'
   use 'norcalli/nvim-colorizer.lua'
 
   -- Completion / LSP
@@ -43,6 +43,7 @@ return require('packer').startup(function(use)
   -- Other
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'nvim-treesitter/playground'
+  use 'sbdchd/neoformat'
 
   -- File navigation
   use {'junegunn/fzf', run = function() vim.fn['fzf#install']() end}
