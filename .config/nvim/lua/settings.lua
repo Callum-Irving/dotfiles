@@ -21,6 +21,9 @@ vim.opt.hlsearch = true
 
 vim.opt.mouse = 'a'
 
+vim.opt.nrformats = vim.opt.nrformats + 'alpha'
+-- set nrformats+=alpha
+
 vim.cmd [[
 set expandtab
 set shiftwidth=4
