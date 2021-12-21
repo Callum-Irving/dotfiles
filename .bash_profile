@@ -20,3 +20,4 @@ export BROWSER="brave"
 # For Netbeans
 export _JAVA_AWT_WM_NONREPARENTING=1
 
+export GOPATH="$XDG_DATA_HOME/go"
