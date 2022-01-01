@@ -16,3 +16,6 @@ feh --bg-fill ~/Pictures/landscape_mountains_art.jpg &
 xidlehook --not-when-fullscreen --not-when-audio --timer 240 'slock' '' --timer 60 'systemctl suspend' '' &
 
 exec xmonad
+
+# For wacom tablet:
+# xsetwacom set 15 Area 0 0 15200 8550
