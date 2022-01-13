@@ -1,0 +1,20 @@
+#!/bin/sh
+
+find ~/.local/share/vimwiki -name "*.md"|while read fname; do
+    echo "compiling: $fname"
+    output=$(echo "$fname" | sed 's/\.md/\.html/')
+    modified=$(cat "$fname" | sed 's/\.md)/\.html)/')
+    base=$(basename "$fname")
+    # echo "$modified" | pandoc -f markdown -t html -o "$output" --self-contained --metadata title="$base"
+    echo "$modified" | pandoc \
+        --katex \
+        --from markdown+tex_math_single_backslash \
+        --to html5+smart \
+        --self-contained \
+        -o "$output" \
+        --template "/home/callum/.local/share/vimwiki/template.html" \
+        --css "/home/callum/.local/share/vimwiki/theme.css" \
+        --css "/home/callum/.local/share/vimwiki/solarized.css" \
+        --toc
+done
+
