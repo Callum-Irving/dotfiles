@@ -13,7 +13,10 @@ trayer --edge top --align center --SetPartialStrut true --expand true --width 10
 # Set background
 feh --bg-fill ~/Pictures/landscape_mountains_art.jpg &
 # Auto sleep and lock
-xidlehook --not-when-fullscreen --not-when-audio --timer 240 'slock' '' --timer 60 'systemctl suspend' '' &
+xidlehook --detect-sleep --not-when-fullscreen --not-when-audio --timer 240 'slock' '' --timer 60 'systemctl suspend' '' &
+
+# Bind CAPS to CTRL
+setxkbmap -option ctrl:nocaps
 
 exec xmonad
 
