@@ -1,8 +1,12 @@
 (require 'package)
-(require 'use-package)
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
+
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+
+(require 'use-package)
 (setq use-package-always-ensure t)
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
 (setq gc-cons-threshold 33554432)  ; 32mb
@@ -30,7 +34,7 @@
   :config
   (load-theme 'gruber-darker t))
 
-(set-frame-font "Cascadia Code 11" nil t)
+(set-frame-font "Cascadia Code 12" nil t)
 (column-number-mode 1)
 (global-display-line-numbers-mode t) ; TODO: Disable for term
 (menu-bar-mode -1)
@@ -43,6 +47,8 @@
          lsp-prefer-flymake nil
          lsp-signature-render-documentation nil
          lsp-lens-enable nil)
+  :bind (:map lsp-mode-map
+	      ("C-c C-c r" . lsp-rename))
   :commands lsp lsp-deferred)
 
 (use-package lsp-ui
@@ -55,14 +61,6 @@
 (use-package flycheck)
 
 (use-package rustic
-  :bind (:map rustic-mode-map
-              ("M-?" . lsp-find-references)
-              ("C-c C-c l" . flycheck-list-errors)
-              ("C-c C-c a" . lsp-execute-code-action)
-              ("C-c C-c r" . lsp-rename)
-              ("C-c C-c q" . lsp-workspace-restart)
-              ("C-c C-c Q" . lsp-workspace-shutdown)
-              ("C-c C-c s" . lsp-rust-analyzer-status))
   :config
   (setq rustic-format-on-save t))
 
@@ -102,12 +100,6 @@
 	 :map company-active-map
  	 ("C-c C-c C-n" . company-select-next)
  	 ("C-c C-c C-p" . company-select-previous)))
-
-;; Treesitter for syntax highlighting
-(use-package tree-sitter :diminish)
-(use-package tree-sitter-langs)
-(global-tree-sitter-mode)
-(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 
 ;; Disable auto-save and backup files
 (setq auto-save-default nil)
@@ -156,7 +148,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(use-package undo-fu tree-sitter-langs rustic projectile lsp-ui lsp-pyright ivy gruber-darker-theme general flycheck evil diminish company)))
+   '(("use-package")
+     "use-package" "use-package" undo-fu rustic projectile lsp-ui lsp-pyright ivy gruber-darker-theme general flycheck evil diminish company)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
