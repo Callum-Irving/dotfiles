@@ -9,8 +9,9 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
-(setq gc-cons-threshold 33554432)  ; 32mb
+(setq gc-cons-threshold 33554432) ;; 32mb
 (setq lsp-use-plists t)
+(setq comp-deferred-compilation t)
 
 ;; Enable mode diminishing
 (use-package diminish)
@@ -36,7 +37,7 @@
 
 (set-frame-font "Cascadia Code 12" nil t)
 (column-number-mode 1)
-(global-display-line-numbers-mode t) ; TODO: Disable for term
+(global-display-line-numbers-mode t) ;; TODO: Disable for term
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (tool-bar-mode -1) (show-paren-mode 1)
@@ -142,14 +143,31 @@
   :init (setq projectile-project-search-path '("~/Projects/"))
   :bind ("C-S-p" . projectile-switch-project))
 
+(use-package vterm
+  :commands vterm
+  :config
+  ;; (setq term-prompt-regexp "^[a-z_][a-z0-9_-]{0,31}@[a-z_][a-z0-9_-]{0,31}:\[[a-zA-Z0-9_\.-~]+\]>")  ;; Set this to match your custom shell prompt
+  (setq vterm-max-scrollback 500)
+  (set-face-attribute 'vterm-color-black nil   :foreground "#000000" :background "#002b36")
+  (set-face-attribute 'vterm-color-red nil     :foreground "#f43841" :background "#cb4b16")
+  (set-face-attribute 'vterm-color-green nil   :foreground "#73c936" :background "#586e75")
+  (set-face-attribute 'vterm-color-yellow nil  :foreground "#ffdd33" :background "#657b83")
+  (set-face-attribute 'vterm-color-blue nil    :foreground "#96a6c8" :background "#839496")
+  (set-face-attribute 'vterm-color-magenta nil :foreground "#d33682" :background "#6c71c4")
+  (set-face-attribute 'vterm-color-cyan nil    :foreground "#52abde" :background "#93a1a1")
+  (set-face-attribute 'vterm-color-white nil   :foreground "#ffffff" :background "#fdf6e3"))
+
+(use-package magit)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(("use-package")
-     "use-package" "use-package" undo-fu rustic projectile lsp-ui lsp-pyright ivy gruber-darker-theme general flycheck evil diminish company)))
+   '(magit vterm
+	   ("use-package")
+	   "use-package" "use-package" undo-fu rustic projectile lsp-ui lsp-pyright ivy gruber-darker-theme general flycheck evil diminish company)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
