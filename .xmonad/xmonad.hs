@@ -78,6 +78,7 @@ main = do
             ((0, xF86XK_AudioLowerVolume   ), spawn "amixer set Master 5%- unmute"),
             ((0, xF86XK_AudioRaiseVolume   ), spawn "amixer set Master 5%+ unmute"),
             ((0, xF86XK_AudioMute          ), spawn "amixer set Master toggle"),
+            ((mod4Mask .|. shiftMask, xK_e ), spawn "emacs"),
             ((mod4Mask .|. shiftMask, xK_b ), spawn "brave"),
             ((mod4Mask, xK_s               ), spawn "systemctl suspend"),
             ((mod4Mask .|. shiftMask, xK_s ), spawn "systemctl poweroff"),
