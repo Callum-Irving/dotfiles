@@ -1,6 +1,7 @@
 (require 'package)
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/"))
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
@@ -12,6 +13,16 @@
 (setq gc-cons-threshold 33554432) ;; 32mb
 (setq lsp-use-plists t)
 (setq comp-deferred-compilation t)
+(setq inhibit-eol-conversion t)
+
+;; Set fonts
+(set-face-attribute 'default nil :font "Cascadia Code" :height 120 :weight 'normal)
+(set-face-attribute 'fixed-pitch nil :font "Cascadia Code" :height 120 :weight 'normal)
+;; (set-face-attribute 'variable-pitch nil :font "Cantarell" :height 120 :weight 'normal)
+
+;; Disable auto-save and backup files
+(setq auto-save-default nil)
+(setq make-backup-files nil)
 
 ;; Enable mode diminishing
 (use-package diminish)
@@ -35,7 +46,6 @@
   :config
   (load-theme 'gruber-darker t))
 
-(set-frame-font "Cascadia Code 12" nil t)
 (column-number-mode 1)
 (global-display-line-numbers-mode t) ;; TODO: Disable for term
 (menu-bar-mode -1)
@@ -45,12 +55,12 @@
 ;; LSP configuration
 (use-package lsp-mode
   :init (setq lsp-keymap-prefix "C-l"
-         lsp-prefer-flymake nil
+         lsp-log-io t
          lsp-signature-render-documentation nil
          lsp-lens-enable nil)
   :bind (:map lsp-mode-map
 	      ("C-c C-c r" . lsp-rename))
-  :commands lsp lsp-deferred)
+  :commands lsp)
 
 (use-package lsp-ui
   :init (setq lsp-ui-sideline-update-mode 'line
@@ -59,8 +69,6 @@
          lsp-ui-sideline-show-hover nil
          lsp-ui-sideline-ignore-duplicate t))
 
-(use-package flycheck)
-
 (use-package rustic
   :config
   (setq rustic-format-on-save t))
@@ -68,7 +76,9 @@
 (use-package lsp-pyright
   :hook (python-mode . (lambda ()
                           (require 'lsp-pyright)
-                          (lsp-deferred))))
+                          (lsp))))
+
+(use-package haskell-mode)
 
 ;; Ivy
 (use-package ivy
@@ -96,15 +106,11 @@
   :custom
   (company-idle-delay 0)
   (company-minimum-prefix-length 3)
-  (company-selection-wrap-around t)
+  (crompany-selection-wrap-around t)
   :bind (("C-SPC" . company-complete)
 	 :map company-active-map
  	 ("C-c C-c C-n" . company-select-next)
  	 ("C-c C-c C-p" . company-select-previous)))
-
-;; Disable auto-save and backup files
-(setq auto-save-default nil)
-(setq make-backup-files nil)
 
 ;; Better scrolling
 (setq mouse-wheel-scroll-amount '(3 ((shift) . 3))) ;; one line at a time
@@ -119,20 +125,35 @@
   (general-create-definer my-leader-def :prefix "SPC")
   (my-leader-def
    :states '(normal)
-   "m" 'evil-window-vnew
-   "n" 'evil-window-new
+   "m" 'evil-window-vsplit
+   "n" 'evil-window-split
+   ;; "m" (lambda () (interactive) (evil-window-vsplit) (call-interactively 'switch-to-buffer))
+   ;; "n" (lambda () (interactive) (evil-window-split) (call-interactively 'switch-to-buffer))
    "h" 'windmove-left
    "j" 'windmove-down
    "k" 'windmove-up
    "l" 'windmove-right)
   (general-define-key
    :states 'insert
+   :keymaps 'company-active-map
    "C-j" 'company-select-next
    "C-k" 'company-select-previous)
   (general-define-key
    :states 'normal
    "K" 'lsp-describe-thing-at-point
-   "C-p" 'projectile-find-file)
+   "C-p" 'projectile-find-file
+   :keymaps 'org-mode-map
+   "C-j" 'org-next-visible-heading
+   "C-k" 'org-previous-visible-heading
+   "M-h" 'org-metaleft
+   "M-j" 'org-metadown
+   "M-k" 'org-metaup
+   "M-l" 'org-metaright
+   "M-H" 'org-shiftmetaleft
+   "M-J" 'org-shiftmetadown
+   "M-K" 'org-shiftmetaup
+   "M-L" 'org-shiftmetaright
+   "<tab>" 'org-cycle)
   (general-define-key
    :states 'emacs
    "<escape>" 'evil-normal-state))
@@ -159,15 +180,54 @@
 
 (use-package magit)
 
+(defun org-mode-setup ()
+  ;; (variable-pitch-mode 1)
+  (visual-line-mode 1)
+  (display-line-numbers-mode -1)
+  (setq evil-auto-indent nil
+        org-hide-emphasis-markers nil)
+  (org-indent-mode))
+
+(use-package org
+  :pin org
+  :hook (org-mode . org-mode-setup))
+  ;; :config
+  ;; (setq org-hide-emphasis-markers t)
+  ;; ;; (set-face-attribute 'org-document-title nil :font "Cantarell" :weight 'bold :height 1.3)
+  ;; ;; (dolist (face '((org-level-1 . 1.2)
+  ;; ;;                 (org-level-2 . 1.1)
+  ;; ;;                 (org-level-3 . 1.05)
+  ;; ;;                 (org-level-4 . 1.0)
+  ;; ;;                 (org-level-5 . 1.1)
+  ;; ;;                 (org-level-6 . 1.1)
+  ;; ;;                 (org-level-7 . 1.1)
+  ;; ;;                 (org-level-8 . 1.1)))
+  ;; ;;   (set-face-attribute (car face) nil :font "Cantarell" :weight 'medium :height (cdr face)))
+  ;; (require 'org-indent)
+  ;; (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+  ;; (set-face-attribute 'org-table nil  :inherit 'fixed-pitch)
+  ;; (set-face-attribute 'org-formula nil  :inherit 'fixed-pitch)
+  ;; (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+  ;; (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
+  ;; (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+  ;; (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+  ;; (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+  ;; (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+  ;; (set-face-attribute 'org-column nil :background nil)
+  ;; (set-face-attribute 'org-column-title nil :background nil))
+
+
+
+;; DON'T TOUCH
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(magit vterm
-	   ("use-package")
-	   "use-package" "use-package" undo-fu rustic projectile lsp-ui lsp-pyright ivy gruber-darker-theme general flycheck evil diminish company)))
+   '(with-editor haskell-mode magit
+      ("use-package")
+      "use-package" "use-package")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
