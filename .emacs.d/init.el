@@ -13,7 +13,6 @@
 (setq gc-cons-threshold 33554432) ;; 32mb
 (setq lsp-use-plists t)
 (setq comp-deferred-compilation t)
-(setq inhibit-eol-conversion t)
 
 ;; Set fonts
 (set-face-attribute 'default nil :font "Cascadia Code" :height 120 :weight 'normal)
@@ -54,31 +53,35 @@
 
 ;; LSP configuration
 (use-package lsp-mode
-  :init (setq lsp-keymap-prefix "C-l"
-         lsp-log-io t
-         lsp-signature-render-documentation nil
-         lsp-lens-enable nil)
-  :bind (:map lsp-mode-map
-	      ("C-c C-c r" . lsp-rename))
-  :commands lsp)
+  :custom
+  (lsp-keymap-prefix "C-l")
+  (lsp-prefer-flymake nil)
+  (lsp-signature-render-documentation nil)
+  (lsp-signature-doc-lines 1)
+  (lsp-lens-enable nil)
+  :bind (:map lsp-mode-map ("C-c C-c r" . lsp-rename))
+  :commands lsp lsp-deferred)
 
 (use-package lsp-ui
   :init (setq lsp-ui-sideline-update-mode 'line
-         lsp-ui-sideline-enable t
+         lsp-ui-sideline-enable nil
          lsp-ui-sideline-show-code-actions t
          lsp-ui-sideline-show-hover nil
          lsp-ui-sideline-ignore-duplicate t))
 
-(use-package rustic
-  :config
-  (setq rustic-format-on-save t))
+(use-package flycheck)
+
+(use-package rustic)
 
 (use-package lsp-pyright
   :hook (python-mode . (lambda ()
                           (require 'lsp-pyright)
-                          (lsp))))
+                          (lsp-deferred))))
 
 (use-package haskell-mode)
+
+(use-package evil-nerd-commenter
+  :bind ("C-/" . evilnc-comment-or-uncomment-lines))
 
 ;; Ivy
 (use-package ivy
@@ -103,14 +106,22 @@
   :diminish
   :after lsp-mode
   :hook (lsp-mode . company-mode)
+  :config
+  (general-define-key
+   :states 'insert
+   :keymaps 'company-active-map
+   "C-j" 'company-select-next
+   "C-k" 'company-select-previous)
   :custom
   (company-idle-delay 0)
   (company-minimum-prefix-length 3)
   (crompany-selection-wrap-around t)
-  :bind (("C-SPC" . company-complete)
-	 :map company-active-map
- 	 ("C-c C-c C-n" . company-select-next)
- 	 ("C-c C-c C-p" . company-select-previous)))
+  :bind ("C-SPC" . company-complete))
+
+(evil-define-minor-mode-key 'insert 'company-mode
+  (kbd "C-j") 'company-select-next)
+(evil-define-minor-mode-key 'insert 'company-mode
+  (kbd "C-k") 'company-select-previous)
 
 ;; Better scrolling
 (setq mouse-wheel-scroll-amount '(3 ((shift) . 3))) ;; one line at a time
@@ -127,43 +138,36 @@
    :states '(normal)
    "m" 'evil-window-vsplit
    "n" 'evil-window-split
-   ;; "m" (lambda () (interactive) (evil-window-vsplit) (call-interactively 'switch-to-buffer))
-   ;; "n" (lambda () (interactive) (evil-window-split) (call-interactively 'switch-to-buffer))
    "h" 'windmove-left
    "j" 'windmove-down
    "k" 'windmove-up
-   "l" 'windmove-right)
+   "l" 'windmove-right
+   "H" 'windmove-swap-states-left
+   "J" 'windmove-swap-states-down
+   "K" 'windmove-swap-states-up
+   "L" 'windmove-swap-states-right)
   (general-define-key
-   :states 'insert
-   :keymaps 'company-active-map
-   "C-j" 'company-select-next
-   "C-k" 'company-select-previous)
+   :states 'emacs
+   "<escape>" 'evil-normal-state)
   (general-define-key
    :states 'normal
    "K" 'lsp-describe-thing-at-point
-   "C-p" 'projectile-find-file
-   :keymaps 'org-mode-map
-   "C-j" 'org-next-visible-heading
-   "C-k" 'org-previous-visible-heading
-   "M-h" 'org-metaleft
-   "M-j" 'org-metadown
-   "M-k" 'org-metaup
-   "M-l" 'org-metaright
-   "M-H" 'org-shiftmetaleft
-   "M-J" 'org-shiftmetadown
-   "M-K" 'org-shiftmetaup
-   "M-L" 'org-shiftmetaright
-   "<tab>" 'org-cycle)
-  (general-define-key
-   :states 'emacs
-   "<escape>" 'evil-normal-state))
+   "C-p" 'projectile-find-file))
 
+
+;; PROJECT MANAGEMENT : Projectile + Magit
 (use-package projectile
+  :diminish projectile-mode
+  :custom ((projectile-completion-system 'ivy))
   :config
   (projectile-mode 1)
   :init (setq projectile-project-search-path '("~/Projects/"))
   :bind ("C-S-p" . projectile-switch-project))
 
+(use-package magit :commands magit-status)
+
+
+;; VTERM FOR FASTER TERMINAL
 (use-package vterm
   :commands vterm
   :config
@@ -178,8 +182,8 @@
   (set-face-attribute 'vterm-color-cyan nil    :foreground "#52abde" :background "#93a1a1")
   (set-face-attribute 'vterm-color-white nil   :foreground "#ffffff" :background "#fdf6e3"))
 
-(use-package magit)
 
+;; ORG MODE
 (defun org-mode-setup ()
   ;; (variable-pitch-mode 1)
   (visual-line-mode 1)
@@ -190,7 +194,22 @@
 
 (use-package org
   :pin org
-  :hook (org-mode . org-mode-setup))
+  :hook (org-mode . org-mode-setup)
+  :config
+  (general-define-key
+   :states 'normal
+   :keymaps 'org-mode-map
+   "C-j" 'org-next-visible-heading
+   "C-k" 'org-previous-visible-heading
+   "M-h" 'org-metaleft
+   "M-j" 'org-metadown
+   "M-k" 'org-metaup
+   "M-l" 'org-metaright
+   "M-H" 'org-shiftmetaleft
+   "M-J" 'org-shiftmetadown
+   "M-K" 'org-shiftmetaup
+   "M-L" 'org-shiftmetaright
+   "<tab>" 'org-cycle))
   ;; :config
   ;; (setq org-hide-emphasis-markers t)
   ;; ;; (set-face-attribute 'org-document-title nil :font "Cantarell" :weight 'bold :height 1.3)
@@ -225,9 +244,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(with-editor haskell-mode magit
-      ("use-package")
-      "use-package" "use-package")))
+   '(evil-nerd-commenter with-editor haskell-mode use-package magit vterm
+			 ("use-package")
+			 "use-package" "use-package" undo-fu rustic projectile lsp-ui lsp-pyright ivy gruber-darker-theme general flycheck evil diminish company)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
