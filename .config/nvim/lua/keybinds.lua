@@ -3,6 +3,11 @@ local default_opts = { noremap = true, silent = true }
 
 vim.g.mapleader = ' '
 
+map('n', '<C-n>', ':NvimTreeToggle<CR>', default_opts)
+map('n', 'x', '"_x', default_opts)
+map('n', '<leader><BSlash>', ':noh<CR>', default_opts)
+map('n', '<leader>T', ':TodoTrouble<CR>', default_opts)
+
 -- Git
 map('n', '<leader>G', ':Neogit<CR>', default_opts)
 
@@ -10,10 +15,6 @@ map('n', '<leader>G', ':Neogit<CR>', default_opts)
 map('n', '<C-p>', ':FzfLua git_files<CR>', default_opts)
 map('n', '<leader>.', ':FzfLua grep_project<CR>', default_opts)
 map('n', '<leader>b', ':FzfLua buffers<CR>', default_opts)
-
-map('n', '<C-n>', ':NvimTreeToggle<CR>', default_opts)
-map('n', 'x', '"_x', default_opts)
-map('n', '<leader><BSlash>', ':noh<CR>', default_opts)
 
 -- Split navigation
 map('n', '<leader>h', '<C-W>h', default_opts)
