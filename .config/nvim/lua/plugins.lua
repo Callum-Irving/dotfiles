@@ -61,8 +61,9 @@ return require('packer').startup(function(use)
       'folke/trouble.nvim'
     }
   }
-
-  use 'tpope/vim-fugitive'
+  
+  use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
+  -- use 'tpope/vim-fugitive'
   use 'vimwiki/vimwiki'
 
   -- Automatically sync if installed for first time
