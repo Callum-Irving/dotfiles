@@ -9,13 +9,13 @@ cmp.setup {
   },
   -- completion settings
   completion = {
-    completeopt = 'menu,menuone,noselect',
+    completeopt = 'menu,menuone,noinsert',
     keyword_length = 2
   },
   -- key mapping
   mapping = {
-    ['<C-n>'] = cmp.mapping.select_next_item(),
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
+    ['<C-j>'] = cmp.mapping.select_next_item(),
+    ['<C-k>'] = cmp.mapping.select_prev_item(),
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
@@ -25,20 +25,20 @@ cmp.setup {
       select = false, -- false makes it so that you must explicilty select an item
     },
     -- Tab mapping
-    ['<Tab>'] = function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      else
-        fallback()
-      end
-    end,
-    ['<S-Tab>'] = function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      else
-        fallback()
-      end
-    end
+    -- ['<Tab>'] = function(fallback)
+    --   if cmp.visible() then
+    --     cmp.select_next_item()
+    --   else
+    --     fallback()
+    --   end
+    -- end,
+    -- ['<S-Tab>'] = function(fallback)
+    --   if cmp.visible() then
+    --     cmp.select_prev_item()
+    --   else
+    --     fallback()
+    --   end
+    -- end
   },
   -- load sources, see: https://github.com/topics/nvim-cmp
   sources = {
@@ -54,7 +54,7 @@ cmp.setup {
         buffer = "[BUF]",
         nvim_lsp = "[LSP]",
         vsnip = "[SNIP]",
-        nvim_lua = "[Lua]"
+        nvim_lua = "[LUA]"
       })
     })
   }

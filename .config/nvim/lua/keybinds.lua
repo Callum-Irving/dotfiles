@@ -9,6 +9,7 @@ map('n', '<leader>G', ':Neogit<CR>', default_opts)
 -- FZF
 map('n', '<C-p>', ':FzfLua git_files<CR>', default_opts)
 map('n', '<leader>.', ':FzfLua grep_project<CR>', default_opts)
+map('n', '<leader>b', ':FzfLua buffers<CR>', default_opts)
 
 map('n', '<C-n>', ':NvimTreeToggle<CR>', default_opts)
 map('n', 'x', '"_x', default_opts)
