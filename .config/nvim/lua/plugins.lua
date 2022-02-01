@@ -11,7 +11,7 @@ return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
   -- Appearance
-  use 'Mofiqul/vscode.nvim'
+  use 'morhetz/gruvbox'
   use 'nvim-lualine/lualine.nvim'
   use 'kyazdani42/nvim-web-devicons'
   -- use 'lukas-reineke/indent-blankline.nvim'

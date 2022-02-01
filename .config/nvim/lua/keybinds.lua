@@ -24,6 +24,10 @@ map('n', '<leader>m', ':vnew<CR>', default_opts)
 map('n', '<leader>N', ':lefta new<CR>', default_opts)
 map('n', '<leader>M', ':lefta vnew<CR>', default_opts)
 
+-- Split resizing
+map('n', '<C-=>', ':vert res +5<CR>', default_opts)
+map('n', '<C-->', ':vert res -5<CR>', default_opts)
+
 -- Exit terminal with escape key
 map('t', '<Esc>', [[<C-\><C-n>]], default_opts)
 

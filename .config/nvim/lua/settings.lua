@@ -21,8 +21,11 @@ vim.opt.hlsearch = true
 
 vim.opt.mouse = 'a'
 
+-- Use system clipboard
+vim.opt.clipboard:append {'unnamedplus'}
+
+-- Allow incrementing letters using Ctrl-a
 vim.opt.nrformats = vim.opt.nrformats + 'alpha'
--- set nrformats+=alpha
 
 vim.cmd [[
 set expandtab
@@ -33,7 +36,7 @@ vim.opt.smartindent = true
 
 -- Set colorscheme and italic comments
 vim.g.vscode_style = 'dark'
-vim.cmd[[colorscheme vscode]]
+vim.cmd[[colorscheme gruvbox]]
 vim.cmd('highlight Comment gui=italic cterm=italic')
 
 -- Disable netrwhist
@@ -63,7 +66,7 @@ au.group('CallumsGroup', {
     'TermOpen',
     '*',
     function()
-      vim.wo.number = false
+      -- vim.wo.number = false
       vim.cmd('startinsert')
     end
   },

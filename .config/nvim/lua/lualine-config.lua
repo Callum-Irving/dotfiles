@@ -1,6 +1,8 @@
 -- Configure lualine
 require('lualine').setup {
-    options = {
-      theme = 'vscode'
-    }
+  options = {
+    section_separators = '',
+    component_separators = '',
+    theme = 'gruvbox',
   }
+}
