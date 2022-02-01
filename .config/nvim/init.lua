@@ -10,5 +10,6 @@ require('nvim-tree-config')
 require('todo-config')
 require('vimwiki-config')
 require('neogit-config')
+require('fzf-config')
 require('lsp')
 

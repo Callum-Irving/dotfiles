@@ -17,6 +17,8 @@ export VISUAL="nvim"
 export TERMINAL="kitty"
 export BROWSER="brave"
 
+export BAT_THEME="gruvbox-dark"
+
 # For Netbeans
 export _JAVA_AWT_WM_NONREPARENTING=1
 

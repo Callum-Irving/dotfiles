@@ -3,7 +3,13 @@ local default_opts = { noremap = true, silent = true }
 
 vim.g.mapleader = ' '
 
-map('n', '<C-p>', ':GFiles<CR>', default_opts)
+-- Git
+map('n', '<leader>G', ':Neogit<CR>', default_opts)
+
+-- FZF
+map('n', '<C-p>', ':FzfLua git_files<CR>', default_opts)
+map('n', '<leader>.', ':FzfLua grep_project<CR>', default_opts)
+
 map('n', '<C-n>', ':NvimTreeToggle<CR>', default_opts)
 map('n', 'x', '"_x', default_opts)
 map('n', '<leader><BSlash>', ':noh<CR>', default_opts)
@@ -29,9 +35,8 @@ map('n', '<C-=>', ':vert res +5<CR>', default_opts)
 map('n', '<C-->', ':vert res -5<CR>', default_opts)
 
 -- Exit terminal with escape key
-map('t', '<Esc>', [[<C-\><C-n>]], default_opts)
-
-map('n', '<leader>gc', ':Gdiffsplit<CR>', default_opts)
+-- Breaks exiting FZF with escape
+-- map('t', '<Esc>', [[<C-\><C-n>]], default_opts)
 
 -- vsnip navigation
 vim.cmd [[

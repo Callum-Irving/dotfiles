@@ -46,8 +46,11 @@ return require('packer').startup(function(use)
   use 'sbdchd/neoformat'
 
   -- File navigation
-  use {'junegunn/fzf', run = function() vim.fn['fzf#install']() end}
-  use 'junegunn/fzf.vim'
+  -- use {'junegunn/fzf', run = function() vim.fn['fzf#install']() end}
+  -- use 'junegunn/fzf.vim'
+
+  use { 'ibhagwan/fzf-lua', requires = { 'kyazdani42/nvim-web-devicons' } }
+
   use {
     'kyazdani42/nvim-tree.lua',
     requires = 'kyazdani42/nvim-web-devicons'
@@ -62,8 +65,11 @@ return require('packer').startup(function(use)
     }
   }
   
+  -- Git
   use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
   -- use 'tpope/vim-fugitive'
+
+
   use 'vimwiki/vimwiki'
 
   -- Automatically sync if installed for first time

@@ -13,6 +13,7 @@ vim.opt.swapfile = false
 vim.opt.showmode = false
 
 vim.opt.foldenable = false
+vim.opt.foldlevel = 20
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 
