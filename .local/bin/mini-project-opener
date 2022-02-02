@@ -1,0 +1,51 @@
+#!/bin/sh
+# This script uses fd and fzf to open a project in Neovim or another editor
+# from a provided projects directory.
+#
+# Usage: mini-project-opener [OPTIONS] project_dir
+#
+# Options:
+# -e <editor>   use <editor> instead of default. Default: $EDITOR or nvim
+# -h            print help message
+#
+# Requirements:
+# fd and fzf
+#
+# Copyright 2022 Callum Irving
+
+usage () {
+    printf "USAGE: %s [OPTIONS] project_dir\n\n" "$(basename "$0")"
+    printf "Options:\n"
+    printf " %s <editor>\tuse <editor> instead of default editor. Default: \$EDITOR or vim\n" "-e"
+    printf " %s\tprints this help message\n" "-h, --help"
+}
+
+# Set editor variable
+if [ -z "$EDITOR" ]; then
+    project_editor="vim"
+else
+    project_editor="$EDITOR"
+fi
+
+# Read command line options
+while test "$#" -gt 0; do
+    case "$1" in
+        "-e") shift; project_editor="$1"; shift ;;
+        "-h" | "--help") usage; exit 0 ;;
+        *) break ;;
+    esac
+done
+
+# Check inputs are valid
+test -d "$1" || { printf "ERROR: no project directory provided or directory is invalid\n\n"; usage; exit 1; }
+test -x "$(command -v "$project_editor")" || { printf "ERROR: editor is not executable: %s\n\n" "$project_editor"; usage; exit 1; }
+
+# Use fd and fzf to get the user to pick a project
+selected=$(fd --type directory . "$1" -d 1 | fzf)
+test -d "$selected" || exit 1
+cd "$selected" || exit 1
+
+# Activate Python virtual environment automatically
+test -f ".venv/bin/activate" && . ".venv/bin/activate"
+
+"$project_editor" .
