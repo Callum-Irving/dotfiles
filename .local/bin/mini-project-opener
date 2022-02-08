@@ -41,7 +41,7 @@ test -d "$1" || { printf "ERROR: no project directory provided or directory is i
 test -x "$(command -v "$project_editor")" || { printf "ERROR: editor is not executable: %s\n\n" "$project_editor"; usage; exit 1; }
 
 # Use fd and fzf to get the user to pick a project
-selected=$(fd --type directory . "$1" -d 1 | fzf)
+selected=$(fd --type directory . "$@" -d 1 | fzf)
 test -d "$selected" || exit 1
 cd "$selected" || exit 1
 

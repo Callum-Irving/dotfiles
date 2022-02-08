@@ -9,7 +9,7 @@ cmp.setup {
   },
   -- completion settings
   completion = {
-    completeopt = 'menu,menuone,noinsert',
+    completeopt = 'menu,menuone,noinsert,noselect',
     keyword_length = 2
   },
   -- key mapping
@@ -24,21 +24,6 @@ cmp.setup {
       behavior = cmp.ConfirmBehavior.Replace,
       select = false, -- false makes it so that you must explicilty select an item
     },
-    -- Tab mapping
-    -- ['<Tab>'] = function(fallback)
-    --   if cmp.visible() then
-    --     cmp.select_next_item()
-    --   else
-    --     fallback()
-    --   end
-    -- end,
-    -- ['<S-Tab>'] = function(fallback)
-    --   if cmp.visible() then
-    --     cmp.select_prev_item()
-    --   else
-    --     fallback()
-    --   end
-    -- end
   },
   -- load sources, see: https://github.com/topics/nvim-cmp
   sources = {

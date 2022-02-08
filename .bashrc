@@ -17,7 +17,7 @@ fi
 
 . "$HOME/.cargo/env"
 
-bind '"\C-f":"mini-project-opener ~/Projects\n"'
+bind '"\C-f":"mini-project-opener ~/Projects ~/Projects/CS-class\n"'
 
 
 # BEGIN_KITTY_SHELL_INTEGRATION

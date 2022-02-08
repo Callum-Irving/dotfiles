@@ -37,6 +37,7 @@ return require('packer').startup(function(use)
       require('nvim-autopairs').setup()
     end
   }
+  use 'tami5/lspsaga.nvim'
 
   -- Other
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
