@@ -7,7 +7,7 @@ picom &
 # Systray
 nm-applet &
 # Not working for some reason
-shutter --min_at_startup &
+# shutter --min_at_startup &
 trayer --edge top --align center --SetPartialStrut true --expand true --width 10 --height 19 --transparent true --alpha 0 --SetDockType true --tint 0x000000 &
 
 # Set background
@@ -22,6 +22,7 @@ setxkbmap -option ctrl:nocaps
 # setxkbmap -option caps:escape
 
 exec xmonad
+# exec dbus-launch leftwm
 
 # For wacom tablet:
 # xsetwacom set 15 Area 0 0 15200 8550

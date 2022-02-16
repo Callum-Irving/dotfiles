@@ -31,6 +31,7 @@ import qualified Data.Map        as M
 
 myManageHook = composeAll
     [ className =? "Shutter" --> doFloat
+    , className =? "nannou" --> doFloat
     , manageDocks
     ]
 
