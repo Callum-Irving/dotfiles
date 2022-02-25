@@ -38,6 +38,7 @@ return require('packer').startup(function(use)
     end
   }
   use 'tami5/lspsaga.nvim'
+  use 'preservim/vim-markdown'
 
   -- Other
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
@@ -69,7 +70,7 @@ return require('packer').startup(function(use)
   -- use 'tpope/vim-fugitive'
 
 
-  use 'vimwiki/vimwiki'
+  -- use 'vimwiki/vimwiki'
 
   -- Automatically sync if installed for first time
   if PackerBootstrap then
