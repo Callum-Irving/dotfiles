@@ -27,10 +27,14 @@ map('n', '<leader>K', '<C-W>K', default_opts)
 map('n', '<leader>L', '<C-W>L', default_opts)
 
 -- Split creation
-map('n', '<leader>n', ':new<CR>', default_opts)
-map('n', '<leader>m', ':vnew<CR>', default_opts)
-map('n', '<leader>N', ':lefta new<CR>', default_opts)
-map('n', '<leader>M', ':lefta vnew<CR>', default_opts)
+-- map('n', '<leader>n', ':new<CR>', default_opts)
+-- map('n', '<leader>m', ':vnew<CR>', default_opts)
+-- map('n', '<leader>N', ':lefta new<CR>', default_opts)
+-- map('n', '<leader>M', ':lefta vnew<CR>', default_opts)
+map('n', '<leader>n', ':sp<CR>', default_opts)
+map('n', '<leader>m', ':vsp<CR>', default_opts)
+map('n', '<leader>N', ':lefta sp<CR>', default_opts)
+map('n', '<leader>M', ':lefta vsp<CR>', default_opts)
 
 -- Split resizing
 map('n', '<C-=>', ':vert res +5<CR>', default_opts)

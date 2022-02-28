@@ -48,4 +48,4 @@ cd "$selected" || exit 1
 # Activate Python virtual environment automatically
 test -f ".venv/bin/activate" && . ".venv/bin/activate"
 
-"$project_editor" .
+"$project_editor"
