@@ -65,7 +65,7 @@ main = do
     xmproc <- spawnPipe "xmobar"
     xmonad $ ewmh $ docks defaultConfig
         { modMask = mod4Mask, -- Use Super instead of Alt
-          terminal = "kitty",
+          terminal = "alacritty",
           borderWidth = 0,
           focusFollowsMouse = False,
           manageHook = myManageHook,
