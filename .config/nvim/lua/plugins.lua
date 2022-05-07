@@ -10,10 +10,10 @@ vim.cmd('packadd packer.nvim')
 return require('packer').startup(function(use)
   -- Appearance
   use 'Callum-Irving/gruvbox'
-  use 'nvim-lualine/lualine.nvim'
   use 'kyazdani42/nvim-web-devicons'
-  -- use 'lukas-reineke/indent-blankline.nvim'
   use 'norcalli/nvim-colorizer.lua'
+  use 'lewis6991/gitsigns.nvim'
+  use 'feline-nvim/feline.nvim'
 
   -- Completion / LSP
   use 'neovim/nvim-lspconfig'

@@ -21,6 +21,12 @@ vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.opt.incsearch = true
 vim.opt.hlsearch = true
 
+-- Global status line
+vim.opt.laststatus = 3
+
+-- Block cursor when in insert mode
+vim.opt.guicursor='i:block'
+
 vim.opt.mouse = 'a'
 
 -- Use system clipboard
