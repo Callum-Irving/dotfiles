@@ -2,3 +2,4 @@ theme = "gruvbox"
 
 [editor]
 line-number = "relative"
+true-color = true
