@@ -39,6 +39,7 @@ return require('packer').startup(function(use)
   }
   use 'tami5/lspsaga.nvim'
   use 'preservim/vim-markdown'
+  use 'mhartington/formatter.nvim'
 
   -- Other
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
